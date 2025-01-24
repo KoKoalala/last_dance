@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caesar Cipher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+    }
+    input, button, textarea {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+    }
+    textarea {
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Caesar Cipher</h1>
+  <label for="inputText">Enter text:</label>
+  <textarea id="inputText" placeholder="Type your text here"></textarea>
+  <label for="shift">Enter shift value:</label>
+  <input type="number" id="shift" placeholder="Shift value (e.g., 3)">
+  <button onclick="encrypt()">Encrypt</button>
+  <h2>Encrypted Text:</h2>
+  <textarea id="outputText" readonly></textarea>
+
+  <script>
+    function solution(s, n) {
+      let answer = '';
+      for (let i of s) {
+        if (i === ' ') { // 공백은 그대로 유지
+          answer += ' ';
+        } else if ('a' <= i && i <= 'z') { // 소문자 처리
+          answer += String.fromCharCode((i.charCodeAt(0) - 'a'.charCodeAt(0) + n) % 26 + 'a'.charCodeAt(0));
+        } else if ('A' <= i && i <= 'Z') { // 대문자 처리
+          answer += String.fromCharCode((i.charCodeAt(0) - 'A'.charCodeAt(0) + n) % 26 + 'A'.charCodeAt(0));
+        } else {
+          answer += i; // 기타 문자는 그대로 유지
+        }
+      }
+      return answer;
+    }
+
+    function encrypt() {
+      const inputText = document.getElementById('inputText').value;
+      const shift = parseInt(document.getElementById('shift').value, 10);
+      if (isNaN(shift)) {
+        alert("Please enter a valid number for the shift value.");
+        return;
+      }
+      const outputText = solution(inputText, shift);
+      document.getElementById('outputText').value = outputText;
+    }
+  </script>
+</body>
+</html>
